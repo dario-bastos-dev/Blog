@@ -44,7 +44,7 @@ export default abstract class Categories {
   static async editCategories(req: any, res: any) {
           try {
                     await Category.editCategorie(req.body, req.params.id)
-                    res.redirect("back")
+                    res.redirect("/admin/categories")
                     
           } catch (e: any) {
                     throw new Error(e);

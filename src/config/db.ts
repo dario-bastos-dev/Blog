@@ -10,6 +10,7 @@ export const connection = new Sequelize({
   password: process.env.DB_PASSWORD,
   database: process.env.DB_NAME,
   models: [Category, Article], // Informamos os modelos para o Sequelize
+  timezone: "-03:00"
 });
 
 connection.sync({force:false})

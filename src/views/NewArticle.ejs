@@ -10,15 +10,27 @@
 
     <div class="card-body">
 
-      <form action="/categories/save" method="post">
+      <form action="/articles/save" method="post">
 
+        <label for="title">Título</label>
         <input
           type="text"
           name="title"
           placeholder="defina o título do Artigo"
           class="form-control mt-4 mb-4"/>
+          
+          <label for="body">Descrição do artigo</label>
           <textarea name="body" placeholder="Escreva seu artigo aqui!" id="article" class="form-control"></textarea>
-        <button type="submit" class="btn btn-success">Cadastrar</button>
+
+          <Label for="category">Categoria</Label>
+          <select name="category" id="category" class="form-control">
+            <option value="" selected>-- Categoria --</option>
+            <% allCategories.forEach(category => { %>
+              <option value="<%= category.dataValues.id %>"><%= category.dataValues.title %></option>
+             
+            <% }) %>
+          </select>
+        <button type="submit" class="btn btn-success mt-4">Cadastrar</button>
 
       </form>
 
