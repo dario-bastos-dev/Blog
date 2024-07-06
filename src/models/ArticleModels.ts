@@ -54,7 +54,8 @@ export default class Article extends Model {
             try {
                 const articles:any|undefined = await Article.findAll({
                     include: [{model: Category}],
-                    order: [["id", "DESC"]]
+                    order: [["id", "DESC"]],
+                    limit: 6
                 })
 
                 return articles;
@@ -90,6 +91,21 @@ export default class Article extends Model {
                 const {title, body, category} = Body
                 const slug:string = slugify(title).toLowerCase()
                 await Article.update({title, body, slug, categoryId: category}, {where: {id: id}})
+
+            } catch(e:any) {
+                throw new Error(e)
+            }
+          };
+
+          static async getArticlesAndCount(offset:number) {
+            try {
+                const articlesAndCount = await Article.findAndCountAll({
+                    limit: 6,
+                    offset: offset,
+                    order: [["id", "DESC"]]
+                })
+
+                return articlesAndCount;
 
             } catch(e:any) {
                 throw new Error(e)

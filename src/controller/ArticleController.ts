@@ -1,3 +1,4 @@
+import { off } from 'process';
 import Article from '../models/ArticleModels';
 import Category from '../models/CategoryModels';
 
@@ -77,6 +78,35 @@ export default abstract class Articles {
               if(!article) res.redirect("back");
 
               else res.render("Article", {article});
+
+            } catch(e:any) {
+              throw new Error(e)
+            }
+          };
+
+          static async articlesPage(req:any, res:any) {
+            try {
+              const page = req.params.num;
+              let offset:number = 0;
+              let next:boolean;
+
+              if(isNaN(page) || page <= 1) res.redirect("/");
+
+              else offset = (parseInt(page) -1) *6;
+
+              const articles = await Article.getArticlesAndCount(offset);
+
+              if(offset+4 >= articles.count) next = false;
+
+              else next = true;
+
+              const result:object = {
+                page: parseInt(page),
+                next: next,
+                articles: articles
+              }
+
+              res.render("Page", {result})
 
             } catch(e:any) {
               throw new Error(e)
