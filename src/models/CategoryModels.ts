@@ -22,9 +22,6 @@ export default class Category extends Model {
           @HasMany(() => Article)
           articles!: Article[];
 
-          @HasOne(() => Article)
-          article!: Article;
-
           static async getAllCategories() {
             try {
                 const categories:any|undefined = await Category.findAll();
@@ -63,5 +60,19 @@ export default class Category extends Model {
                 throw new Error(e)
             }
 
-          }
+          };
+
+          static async getCategorie(slug:string) {
+            try {
+                const categorie:any|undefined = await Category.findOne({
+                    where: {slug},
+                    include: [Article]
+                });
+                return categorie;
+
+            } catch(e:any) {
+                throw new Error(e)
+            }
+
+          };
 }

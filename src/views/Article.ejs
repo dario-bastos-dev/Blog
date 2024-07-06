@@ -1,0 +1,20 @@
+<%- include('./partials/_header.ejs') %> 
+<%- include('./partials/_navbar.ejs') %>
+
+<div class="container">
+
+          <div class="card mt-4">
+                    <div class="card-header">
+                              <h4><%- article.dataValues.title %></h4>
+                    </div>
+
+                    <div class="card-body">
+                              <p><%- article.dataValues.body %></p>
+                    </div>
+          </div>
+   
+</div>
+
+<%- include('./partials/_tinyMCE.ejs') %>
+
+<%- include('./partials/_foot.ejs') %>

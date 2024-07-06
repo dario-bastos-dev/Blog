@@ -53,10 +53,22 @@ export default class Article extends Model {
           static async getAllArticles() {
             try {
                 const articles:any|undefined = await Article.findAll({
-                    include: [{model: Category}]
+                    include: [{model: Category}],
+                    order: [["id", "DESC"]]
                 })
 
                 return articles;
+
+            } catch(e:any) {
+                throw new Error(e)
+            }
+            
+          };
+
+          static async getArticle(slug:string) {
+            try {
+                const article:any|undefined = await Article.findOne({where: {slug} })
+                return article;
 
             } catch(e:any) {
                 throw new Error(e)
@@ -75,9 +87,9 @@ export default class Article extends Model {
 
           static async editArticle(Body:any, id:string) {
             try {
-                const {title, body} = Body
+                const {title, body, category} = Body
                 const slug:string = slugify(title).toLowerCase()
-                await Article.update({title, body, slug}, {where: {id: id}})
+                await Article.update({title, body, slug, categoryId: category}, {where: {id: id}})
 
             } catch(e:any) {
                 throw new Error(e)

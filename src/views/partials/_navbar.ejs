@@ -6,11 +6,15 @@
 
     <ul class="navbar-nav">
         <li class="nav-item">
-            <a  class="nav-link" href="/admin/categories">Categorias</a>
+            <a  class="nav-link" href="/">Home</a>
         </li>
-        <li class="nav-item">
-            <a  class="nav-link" href="/admin/articles">Artigos</a>
-        </li>
+        
+        <% category.forEach(categorie => { %>
+            <li class="nav-item">
+                <a  class="nav-link" href="/category/<%- categorie.dataValues.slug %>"><%- categorie.dataValues.title %></a>
+            </li>
+        <% }) %>
+        
     </ul>
 
 </nav>

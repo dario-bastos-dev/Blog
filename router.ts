@@ -3,7 +3,11 @@ import Categories from "./src/controller/CategoryController"
 
 const router = require("express").Router()
 
+// Home page
+router.get("/", Articles.homePageArticles)
+router.get("/:slug", Articles.getArticle)
 // Category
+router.get("/category/:slug", Categories.getCategorie)
 router.get("/admin/categories/new", Categories.categoriesNew)
 router.get("/admin/categories", Categories.allCategories)
 router.get("/categories/delete/:id", Categories.deleteCategorie)

@@ -57,5 +57,29 @@ export default abstract class Articles {
                     } catch(e:any) {
                               throw new Error(e)
                     }
+          };
+
+          static async homePageArticles(req:any, res:any) {
+            try {
+                      const allArticles = await Article.getAllArticles()
+
+                      res.render("Home", {allArticles})
+
+            } catch (e: any) {
+                  throw new Error(e);
+            }
+          };
+
+          static async getArticle(req:any, res:any) {
+            try {
+              const article = await Article.getArticle(req.params.slug)
+
+              if(!article) res.redirect("back");
+
+              else res.render("Article", {article});
+
+            } catch(e:any) {
+              throw new Error(e)
+            }
           }
 }

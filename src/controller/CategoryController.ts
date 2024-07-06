@@ -16,7 +16,7 @@ export default abstract class Categories {
     } catch (e: any) {
       throw new Error(e);
     }
-  }
+  };
 
   static async allCategories(req: any, res: any) {
     try {
@@ -25,7 +25,7 @@ export default abstract class Categories {
     } catch (e: any) {
       throw new Error(e);
     }
-  }
+  };
 
   static async deleteCategorie(req: any, res: any) {
     try {
@@ -39,7 +39,7 @@ export default abstract class Categories {
     } catch (e: any) {
       throw new Error(e);
     }
-  }
+  };
 
   static async editCategories(req: any, res: any) {
           try {
@@ -50,5 +50,18 @@ export default abstract class Categories {
                     throw new Error(e);
           }
 
+  };
+
+  static async getCategorie(req: any, res: any) {
+    try {
+      const categories = await Category.getCategorie(req.params.slug)
+
+      if(!categories) res.redirect("back");
+
+      else res.render("HomeCategory", {categories});
+
+    } catch(e:any) {
+      throw new Error(e)
+    }
   }
 }

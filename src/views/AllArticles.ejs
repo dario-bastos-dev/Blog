@@ -42,8 +42,8 @@
           aria-labelledby="exampleModalLabel"
           aria-hidden="true"
         >
-          <div class="modal-dialog">
-            <div class="modal-content">
+          <div class="modal-dialog" >
+            <div class="modal-content" style="width: 1000px;">
               <div class="modal-header">
                 <h1 class="modal-title fs-5" id="exampleModalLabel">
                   
@@ -59,10 +59,28 @@
                     <form action="/articles/edit/<%= article.dataValues.id %>" method="post">
 
                               <label for="title">Título do artigo:</label>
-                              <input type="text" name="title" class="form-control mt-3" value="<%= article.dataValues.title %>">
+                              <input type="text" name="title" class="form-control mt-2" value="<%= article.dataValues.title %>">
 
-                              <label for="title">Título do artigo:</label>
-                              <textarea type="body" name="body" class="form-control mt-3"><%= article.dataValues.body %></textarea>
+                              <label class="mt-3" for="title">Título do artigo:</label>
+                              <textarea type="body" name="body" class="form-control mt-2"><%= article.dataValues.body %></textarea>
+
+                              <label class="mt-3" for="title">Categoria do artigo:</label>
+                              <select name="category" id="category" class="form-control">
+                                
+                                <% category.forEach(categorie => { %>
+
+                                  <% if (article.dataValues.category.dataValues.id == categorie.dataValues.id) { %>
+
+                                    <option value="<%= categorie.dataValues.id %>" selected>-- <%= categorie.dataValues.title %> --</option>
+                                   
+                                  <% } else { %>
+                                   
+                                  <option value="<%= categorie.dataValues.id %>"><%= categorie.dataValues.title %></option>
+
+                                  <% } %>
+                                 
+                                <% }) %>
+                              </select>
                     
               </div>
               <div class="modal-footer">
