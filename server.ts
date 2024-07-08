@@ -4,7 +4,7 @@ const app = express()
 require("dotenv").config()
 import path from "path";
 import { connection } from "./src/config/db";
-import { middlewareGetCategory, sessionUsage } from "./src/middlewares/middlewares";
+import { Middlewars, sessionUsage } from "./src/middlewares/middlewares";
 import flash from "connect-flash"
 
 // Database Myslq
@@ -35,5 +35,6 @@ app.use(express.json())
 // Middlewars
 app.use(sessionUsage)
 app.use(flash())
-app.use(middlewareGetCategory)
+app.use(Middlewars.getUser)
+app.use(Middlewars.getCategory)
 app.use(router)

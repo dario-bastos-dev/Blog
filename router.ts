@@ -1,5 +1,6 @@
 import Articles from "./src/controller/ArticleController"
 import Categories from "./src/controller/CategoryController"
+import Users from "./src/controller/UserController"
 
 const router = require("express").Router()
 
@@ -20,5 +21,7 @@ router.get("/admin/articles/new", Articles.newArticle)
 router.get("/articles/delete/:id", Articles.deleteArticle)
 router.post("/articles/edit/:id", Articles.editArticle)
 router.post("/articles/save", Articles.saveArticle)
+// Admin
+router.get("/admin/user/create", Users)
 
 export default router

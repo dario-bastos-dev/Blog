@@ -1,6 +1,7 @@
-import { Column, DataType, HasMany, HasOne, Model, Table } from "sequelize-typescript";
+import { BelongsTo, Column, DataType, ForeignKey, HasMany, HasOne, Model, Table } from "sequelize-typescript";
 import Article from './ArticleModels';
 import slugify from "slugify";
+import User from "./UserModels";
 
 @Table({
           tableName: 'category',
@@ -21,6 +22,17 @@ export default class Category extends Model {
 
           @HasMany(() => Article)
           articles!: Article[];
+
+          @ForeignKey(() => User)
+          @Column({
+                    type:DataType.INTEGER,
+                    allowNull: false
+          })
+          userId!: User;
+
+
+          @BelongsTo(() => User)
+          user!: User;
 
           static async getAllCategories() {
             try {

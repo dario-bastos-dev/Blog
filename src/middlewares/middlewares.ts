@@ -1,5 +1,6 @@
 import session from "express-session";
 import Category from "../models/CategoryModels";
+import User from '../models/UserModels';
 export const sessionUsage = session({
           secret: "Sessions Aplication",
           resave: false,
@@ -10,7 +11,9 @@ export const sessionUsage = session({
           },
 }); 
 
-export const middlewareGetCategory = async (req:any, res:any, next:any) =>{
+export class Middlewars{
+  
+  static async getCategory(req:any, res:any, next:any) {
 
           const categories = await Category.getAllCategories()
 
@@ -19,4 +22,12 @@ export const middlewareGetCategory = async (req:any, res:any, next:any) =>{
           res.locals.category = req.session.category;  
           next(); 
         
+  };
+
+  static async getUser(req:any, res:any, next:any) {
+    req.locals.user = req.session.User
+    next()
+
+  };
+
 }

@@ -1,6 +1,7 @@
 import { BelongsTo, Column, DataType, ForeignKey, Model, Table } from "sequelize-typescript";
 import Category from "./CategoryModels";
 import slugify from "slugify";
+import User from "./UserModels";
 
 @Table({
           tableName: 'article',
@@ -35,6 +36,17 @@ export default class Article extends Model {
 
           @BelongsTo(() => Category)
           category!: Category;
+
+          @ForeignKey(() => User)
+          @Column({
+                    type:DataType.INTEGER,
+                    allowNull: false
+          })
+          userId!: User;
+
+
+          @BelongsTo(() => User)
+          user!: User;
 
           static async createArticle(Body:any) {
             try {
