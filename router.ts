@@ -22,6 +22,7 @@ router.get("/articles/delete/:id", Articles.deleteArticle)
 router.post("/articles/edit/:id", Articles.editArticle)
 router.post("/articles/save", Articles.saveArticle)
 // Admin
-router.get("/admin/user/create", Users)
+router.get("/admin/user/create", Users.createUserPage)
+router.post("/user/create", Users.createNewUser)
 
 export default router
