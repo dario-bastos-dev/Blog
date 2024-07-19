@@ -1,11 +1,12 @@
-import User from "../models/UserModels"
+import User from '../models/UserModels';
+import { Request, Response } from "express"
 
 export default class Users {
-          static createUserPage(req:any, res:any) {
+          static createUserPage(req:Request, res:Response): void {
                     res.render("CreateUser")
           }
 
-          static async createNewUser(req:any, res:any){
+          static async createNewUser(req:Request, res:Response): Promise<void> {
                     await User.createUser(req.body)
 
                     if(User.error.length > 0) {

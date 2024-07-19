@@ -1,16 +1,19 @@
+import { InterfaceCategory } from "../interfaces/Interfaces";
 import Category from "../models/CategoryModels";
+import { Response, Request } from "express";
 
 export default abstract class Categories {
-  static categoriesNew(req: any, res: any) {
+  static categoriesNew(req:Request, res:Response): void {
     res.render("NewCategories");
   }
 
-  static async categorySave(req: any, res: any) {
+  static async categorySave(req:Request, res:Response): Promise<void> {
     try {
       if (!req.body.title) {
         res.redirect("/admin/categories/new");
       } else {
-        await Category.createCategorie(req.body);
+        const body: InterfaceCategory = {title:req.body.title}
+        await Category.createCategorie(body);
         res.redirect("back");
       }
     } catch (e: any) {
@@ -18,7 +21,7 @@ export default abstract class Categories {
     }
   };
 
-  static async allCategories(req: any, res: any) {
+  static async allCategories(req:Request, res:Response): Promise<void> {
     try {
       const allCategories: any | undefined = await Category.getAllCategories();
       res.render("AllCategories", { allCategories });
@@ -27,11 +30,11 @@ export default abstract class Categories {
     }
   };
 
-  static async deleteCategorie(req: any, res: any) {
+  static async deleteCategorie(req:Request, res:Response): Promise<void> {
     try {
       if (!req.params.id) res.redirect("/admin/categories");
       else {
-        if (!isNaN(req.params.id)) {
+        if (req.params.id !== null) {
           await Category.deleteCategorie(req.params.id);
           res.redirect("back");
         } else res.redirect("/admin/categories");
@@ -41,9 +44,10 @@ export default abstract class Categories {
     }
   };
 
-  static async editCategories(req: any, res: any) {
+  static async editCategories(req:Request, res:Response): Promise<void> {
           try {
-                    await Category.editCategorie(req.body, req.params.id)
+                    const body: InterfaceCategory = {title:req.body.title}
+                    await Category.editCategorie(body, req.params.id)
                     res.redirect("/admin/categories")
                     
           } catch (e: any) {
@@ -52,7 +56,7 @@ export default abstract class Categories {
 
   };
 
-  static async getCategorie(req: any, res: any) {
+  static async getCategorie(req:Request, res:Response): Promise<void> {
     try {
       const categories = await Category.getCategorie(req.params.slug)
 

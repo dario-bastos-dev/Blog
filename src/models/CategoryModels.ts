@@ -2,6 +2,7 @@ import { BelongsTo, Column, DataType, ForeignKey, HasMany, HasOne, Model, Table 
 import Article from './ArticleModels';
 import slugify from "slugify";
 import User from "./UserModels";
+import { InterfaceCategory } from '../interfaces/Interfaces';
 
 @Table({
           tableName: 'category',
@@ -34,9 +35,9 @@ export default class Category extends Model {
           @BelongsTo(() => User)
           user!: User;
 
-          static async getAllCategories() {
+          static async getAllCategories(): Promise<Category[]> {
             try {
-                const categories:any|undefined = await Category.findAll();
+                const categories = await this.findAll();
                 return categories;
 
             } catch(e:any) {
@@ -45,9 +46,9 @@ export default class Category extends Model {
 
           };
 
-          static async createCategorie(body:any) {
+          static async createCategorie(body: InterfaceCategory): Promise<void> {
             try {
-                await Category.create({title: body.title, slug: slugify(body.title).toLowerCase()})
+                await this.create({title: body.title, slug: slugify(body.title).toLowerCase(), userId: 1})
 
             } catch(e:any) {
                 throw new Error(e)
@@ -57,16 +58,16 @@ export default class Category extends Model {
 
           static async deleteCategorie(id:string) {
             try {
-                await Category.destroy({where:{id: id}})
+                await this.destroy({where:{id: id}})
 
             } catch(e:any) {
                 throw new Error(e)
             }
           };
 
-          static async editCategorie(body:any, id:string) {
+          static async editCategorie(body: InterfaceCategory, id:string): Promise<void> {
             try {
-                await Category.update({title: body.title, slug: slugify(body.title).toLowerCase()}, {where: {id: id}})
+                await this.update({title: body.title, slug: slugify(body.title).toLowerCase()}, {where: {id: id}})
 
             } catch(e:any) {
                 throw new Error(e)
@@ -74,12 +75,13 @@ export default class Category extends Model {
 
           };
 
-          static async getCategorie(slug:string) {
+          static async getCategorie(slug:string):Promise<Category> {
             try {
-                const categorie:any|undefined = await Category.findOne({
+                const categorie = await this.findOne({
                     where: {slug},
                     include: [Article]
-                });
+                }) as Category;
+
                 return categorie;
 
             } catch(e:any) {

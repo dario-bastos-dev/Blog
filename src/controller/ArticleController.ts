@@ -1,11 +1,13 @@
-import { off } from 'process';
+import { toInt } from 'validator';
 import Article from '../models/ArticleModels';
 import Category from '../models/CategoryModels';
+import { Request, Response } from 'express';
+import { InterfaceArticle } from '../interfaces/Interfaces';
 
 export default abstract class Articles {
-          static async newArticle(req:any, res:any) {
+          static async newArticle(req:Request, res:Response): Promise<void> {
                     try {
-                              const allCategories:any = await Category.getAllCategories();
+                              const allCategories = await Category.getAllCategories();
                               res.render("NewArticle", {allCategories})
 
                     } catch (e: any) {
@@ -13,9 +15,15 @@ export default abstract class Articles {
                             }
           };
 
-          static async saveArticle(req:any, res:any) {
+          static async saveArticle(req:Request, res:Response): Promise<void> {
                     try {
-                              await Article.createArticle(req.body)
+                              const body: InterfaceArticle = {
+                                title: req.body.title,
+                                body: req.body.body,
+                                category: req.body.category
+                              }
+
+                              await Article.createArticle(body)
 
                               res.redirect("/admin/articles")
 
@@ -24,7 +32,7 @@ export default abstract class Articles {
                   }
           };
 
-          static async allArticles(req:any, res:any) {
+          static async allArticles(req:Request, res:Response): Promise<void> {
                     try {
                               const allArticles = await Article.getAllArticles()
 
@@ -35,11 +43,11 @@ export default abstract class Articles {
                   }
           };
 
-          static async deleteArticle(req:any, res:any) {
+          static async deleteArticle(req:Request, res:Response): Promise<void> {
                     try {
                               if (!req.params.id) res.redirect("/admin/articles");
                               else {
-                                if (!isNaN(req.params.id)) {
+                                if (req.params.id !== null) {
                                   await Article.deleteArticle(req.params.id);
                                   res.redirect("back");
 
@@ -50,9 +58,14 @@ export default abstract class Articles {
                             }
           };
 
-          static async editArticle(req:any, res:any) {
+          static async editArticle(req:Request, res:Response): Promise<void> {
                     try {
-                              await Article.editArticle(req.body, req.params.id)
+                      const body: InterfaceArticle = {
+                        title: req.body.title,
+                        body: req.body.body,
+                        category: req.body.category
+                      }
+                              await Article.editArticle(body, req.params.id)
                               res.redirect("/admin/articles")
 
                     } catch(e:any) {
@@ -60,7 +73,7 @@ export default abstract class Articles {
                     }
           };
 
-          static async homePageArticles(req:any, res:any) {
+          static async homePageArticles(req:Request, res:Response): Promise<void> {
             try {
                       const allArticles = await Article.getAllArticles()
 
@@ -71,7 +84,7 @@ export default abstract class Articles {
             }
           };
 
-          static async getArticle(req:any, res:any) {
+          static async getArticle(req:Request, res:Response): Promise<void> {
             try {
               const article = await Article.getArticle(req.params.slug)
 
@@ -84,15 +97,15 @@ export default abstract class Articles {
             }
           };
 
-          static async articlesPage(req:any, res:any) {
+          static async articlesPage(req:Request, res:Response): Promise<void> {
             try {
-              const page = req.params.num;
+              const page = parseInt(req.params.num);
               let offset:number = 0;
               let next:boolean;
 
               if(isNaN(page) || page <= 1) res.redirect("/");
 
-              else offset = (parseInt(page) -1) *6;
+              else offset = (page -1) *6;
 
               const articles = await Article.getArticlesAndCount(offset);
 
@@ -101,7 +114,7 @@ export default abstract class Articles {
               else next = true;
 
               const result:object = {
-                page: parseInt(page),
+                page: page,
                 next: next,
                 articles: articles
               }

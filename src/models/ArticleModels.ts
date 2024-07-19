@@ -2,6 +2,7 @@ import { BelongsTo, Column, DataType, ForeignKey, Model, Table } from "sequelize
 import Category from "./CategoryModels";
 import slugify from "slugify";
 import User from "./UserModels";
+import { InterfaceArticle } from "../interfaces/Interfaces";
 
 @Table({
           tableName: 'article',
@@ -48,24 +49,22 @@ export default class Article extends Model {
           @BelongsTo(() => User)
           user!: User;
 
-          static async createArticle(Body:any) {
+          static async createArticle(Body: InterfaceArticle): Promise<void> {
             try {
-                let title:string = Body.title
-                let body:string = Body.body
-                let category:string = Body.category
-                let slug:string = slugify(title).toLowerCase()
+                const {title, body, category} = Body
+                const slug:string = slugify(title).toLowerCase()
 
-                await Article.create({title, body, slug, categoryId: category})
+                await this.create({title, body, slug, categoryId: category, userId: 1})
 
         } catch(e:any) {
             throw new Error(e)
         }
           };
 
-          static async getAllArticles() {
+          static async getAllArticles(): Promise<Article[]> {
             try {
-                const articles:any|undefined = await Article.findAll({
-                    include: [{model: Category}],
+                const articles = await this.findAll({
+                    include: [Category],
                     order: [["id", "DESC"]],
                     limit: 6
                 })
@@ -78,9 +77,9 @@ export default class Article extends Model {
             
           };
 
-          static async getArticle(slug:string) {
+          static async getArticle(slug:string): Promise<Article> {
             try {
-                const article:any|undefined = await Article.findOne({where: {slug} })
+                const article = await this.findOne({where: {slug} }) as Article;
                 return article;
 
             } catch(e:any) {
@@ -89,29 +88,32 @@ export default class Article extends Model {
             
           };
 
-          static async deleteArticle(id:string) {
+          static async deleteArticle(id:string): Promise<void> {
             try {
-                await Article.destroy({where:{id: id}})
+                await this.destroy({where:{id: id}})
 
             } catch(e:any) {
                 throw new Error(e)
             }
           };
 
-          static async editArticle(Body:any, id:string) {
+          static async editArticle(Body: InterfaceArticle, id:string): Promise<void> {
             try {
                 const {title, body, category} = Body
-                const slug:string = slugify(title).toLowerCase()
-                await Article.update({title, body, slug, categoryId: category}, {where: {id: id}})
+                const slug = slugify(title).toLowerCase()
+                await this.update({title, body, slug, categoryId: category}, {where: {id: id}})
 
             } catch(e:any) {
                 throw new Error(e)
             }
           };
 
-          static async getArticlesAndCount(offset:number) {
+          static async getArticlesAndCount(offset:number): Promise<{
+            rows: Article[],
+            count: number
+          }> {
             try {
-                const articlesAndCount = await Article.findAndCountAll({
+                const articlesAndCount = await this.findAndCountAll({
                     limit: 6,
                     offset: offset,
                     order: [["id", "DESC"]]
