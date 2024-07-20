@@ -2,32 +2,44 @@
 <%- include('./partials/_navbar.ejs')%>
 
 <div class="container">
+  <% errors.forEach(error => { %>
+    <div class="alert alert-danger mt-3">
+              <p><%= error %></p>
+    </div>
+
+<% }) %>
+  <% success.forEach(succes => { %>
+    <div class="alert alert-success mt-3">
+              <p><%= succes %></p>
+    </div>
+
+<% }) %>
   <hr />
-  <h2>Categorias</h2>
-  <a href="/admin/categories/new" class="btn btn-success"
-    >Adicionar nova categoria</a
-  >
+  <h2>Usuários</h2>
   <hr />
   <table class="table table-bordered">
     <thead>
       <tr>
         <th>Id</th>
-        <th>Título</th>
-        <th>Slug</th>
+        <th>Nome</th>
+        <th>E-mail</th>
         <th>Ações</th>
       </tr>
     </thead>
 
     <tbody>
-      <% allCategories.forEach(categorie => { %>
+          <% let i = 0 %>
+      <% allUsers.forEach(user => { %>
       <tr>
-        <th><%= categorie.dataValues.id %></th>
-        <th><%= categorie.dataValues.title %></th>
-        <th><%= categorie.dataValues.slug %></th>
+          <% i++ %>
+
+        <th><%- i %></th>
+        <th><%= user.dataValues.name %></th>
+        <th><%= user.dataValues.email %></th>
         <th>
-          <button class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#exampleModal-<%= categorie.dataValues.id %>" >Editar</button>
+          <button class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#exampleModal-<%= user.dataValues.id %>" >Editar</button>
           <a
-            href="/categories/delete/<%= categorie.dataValues.id %>"
+            href="/categories/delete/<%= user.dataValues.id %>"
             class="btn btn-danger"
             >Excluir</a
           >
@@ -35,7 +47,7 @@
         <!-- Modal edição -->
         <div
           class="modal fade"
-          id="exampleModal-<%= categorie.dataValues.id %>"
+          id="exampleModal-<%= user.dataValues.id %>"
           tabindex="-1"
           aria-labelledby="exampleModalLabel"
           aria-hidden="true"
@@ -54,10 +66,10 @@
                 ></button>
               </div>
               <div class="modal-body">
-                    <form action="/admin/categories/edit/<%= categorie.dataValues.id %>" method="post">
+                    <form action="/admin/categories/edit/<%= user.dataValues.id %>" method="post">
 
                               <label for="title">Título da categoria:</label>
-                              <input type="text" name="title" class="form-control mt-3" value="<%= categorie.dataValues.title %>">
+                              <input type="text" name="title" class="form-control mt-3" value="<%= user.dataValues.name %>">
                     
               </div>
               <div class="modal-footer">

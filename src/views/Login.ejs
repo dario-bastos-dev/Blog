@@ -1,9 +1,8 @@
-<%- include('./partials/_header.ejs') %> 
-<%- include('./partials/_navbar.ejs') %>
+<%- include('./partials/_header.ejs') %>
 
 <div class="container">
           <% errors.forEach(error => { %>
-                    <div class="alert alert-danger">
+                    <div class="alert alert-danger mt-3">
                               <p><%= error %></p>
                     </div>
            
@@ -12,14 +11,11 @@
           <hr>
           <div class="card mt-5">
                     <div class="card-header">
-                              <h2>Criação de usuário</h2>
+                              <h2>Fazer login</h2>
                     </div>
 
                     <div class="card-body">
-                              <form action="/user/create" method="post">
-
-                                        <label for="name">Nome de usuário</label>
-                                        <input type="text" name="name" class="form-control" placeholder="Example Name">
+                              <form action="/login/auth" method="post">
 
                                         <label for="email" class="mt-4">E-mail</label>
                                         <input type="email" name="email" class="form-control" placeholder="exemplo@gmail.com">
@@ -27,7 +23,7 @@
                                         <label for="password" class="mt-4">Senha</label>
                                         <input type="password" name="password" class="form-control" placeholder="Digite sua senha">
 
-                                        <button type="submit" class="btn btn-success btn-block mt-4">Criar usuário</button>
+                                        <button type="submit" class="btn btn-success btn-block mt-4">Entrar</button>
 
                               </form>
 

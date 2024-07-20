@@ -5,6 +5,12 @@ export interface InterfaceUSer {
 
 }
 
+export interface InterfaceLogin {
+          email: string;
+          password: string;
+
+}
+
 export interface InterfaceCategory {
           title: string;
 }

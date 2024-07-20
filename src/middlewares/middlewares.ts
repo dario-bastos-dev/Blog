@@ -17,16 +17,21 @@ export const sessionUsage = session({
 export class Middlewars{
   
   static async getCategory(req:Request, res:Response, next:NextFunction): Promise<void> {
-          const categories = await Category.getAllCategories()
+          try {
+            const categories = await Category.getAllCategories()
 
-          req.session.category = categories;
-          res.locals.category = req.session.category;  
+            req.session.category = categories;
+            res.locals.category = req.session.category;  
 
-          next(); 
+            next(); 
+
+        } catch(e: any) {
+          throw new Error
+        }
         
   };
 
-  static async getUser(req:Request, res:Response, next:NextFunction): Promise<void> {
+  static getUser(req:Request, res:Response, next:NextFunction): void {
     res.locals.errors = req.flash("errors")
     res.locals.success = req.flash("success")
     res.locals.user = req.session.user
@@ -34,5 +39,10 @@ export class Middlewars{
     next()
 
   };
+
+  static adminAuth(req:Request, res:Response, next:NextFunction) {
+      if(req.session.user == undefined || null) res.redirect("/admin/login");
+      else next();
+  }
 
 }

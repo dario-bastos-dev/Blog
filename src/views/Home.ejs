@@ -2,6 +2,19 @@
 <%- include('./partials/_navbar.ejs') %>
 
 <div class="container">
+        <% errors.forEach(error => { %>
+                <div class="alert alert-danger mt-3">
+                          <p><%= error %></p>
+                </div>
+            
+            <% }) %>
+              <% success.forEach(succes => { %>
+                <div class="alert alert-success mt-3">
+                          <p><%= succes %></p>
+                </div>
+            
+            <% }) %>
+            
           <h2 class="mt-3">Bem-vindo!</h2>
           <p>Seja bem-vindo ao meu blog!</p>
           <hr>
@@ -18,7 +31,7 @@
           </div>
    
   <% }) %>
-</div>
+
 
 <div class="row">
         <div class="col-md-12 mt-4 d-flex justify-content-center">
@@ -29,6 +42,7 @@
                         </ul>
                 </nav>
         </div>
+</div>
 </div>
 
 <%- include('./partials/_tinyMCE.ejs') %>
