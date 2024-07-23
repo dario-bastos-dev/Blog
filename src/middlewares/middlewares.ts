@@ -12,6 +12,7 @@ export const sessionUsage = session({
             httpOnly: true,
             maxAge: 1000 * 60 * 7 * 1000,
           },
+          name: "user"
 }); 
 
 export class Middlewars{

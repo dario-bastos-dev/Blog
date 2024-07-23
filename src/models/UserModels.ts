@@ -11,7 +11,7 @@ import { InterfaceLogin, InterfaceUSer } from "../interfaces/Interfaces";
 })
 export default class User extends Model{
           private static  _error: Array<string> = [];
-          private static _user: object = {};
+          private static _user: object | User = {};
 
           @Column({
                     type: DataType.STRING,
@@ -93,6 +93,33 @@ export default class User extends Model{
                     throw new Error(e)
                }
           };
+
+          static async editUser(body: InterfaceUSer, id: string): Promise<void> {
+               try {
+                    if(body.password == null || undefined) await this.update({name: body.name, email: body.email}, {where: {id: id}});
+                    else {
+                         const salt = bcryptjs.genSaltSync(10)
+                         const hash = bcryptjs.hashSync(body.password, salt)
+
+                         await this.update({name: body.name, email: body.email, password: hash}, {where: {id: id}});
+
+                         this._user = await this.findByPk(id) as User
+                    }
+   
+               } catch(e:any) {
+                   throw new Error(e)
+               }
+   
+             };
+
+             static async deleteUser(id: string) {
+               try {
+                   await this.destroy({where:{id: id}})
+   
+               } catch(e:any) {
+                   throw new Error(e)
+               }
+             };
 
           static async loginAuth(body: InterfaceLogin): Promise<void> {
                try{

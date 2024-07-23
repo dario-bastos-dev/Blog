@@ -1,0 +1,48 @@
+<%- include('./partials/_header.ejs') %> 
+<%- include('./partials/_navbar.ejs')%>
+
+<div class="container">
+  <% errors.forEach(error => { %>
+    <div class="alert alert-danger mt-3">
+              <p><%= error %></p>
+    </div>
+
+<% }) %>
+  <% success.forEach(succes => { %>
+    <div class="alert alert-success mt-3">
+              <p><%= succes %></p>
+    </div>
+
+<% }) %>
+  <hr />
+  <h2>Perfil</h2>
+  <hr />
+
+  <div class="row">
+          <form action="/admin/update/<%= user.id %>" method="post">
+
+                    <div class="col-md-12">
+                              <label for="name">Nome de usuário</label>
+                              <input type="text" name="name" class="form-control mt-2" value="<%= user.name%>">
+                    </div>
+
+                    <div class="col-md-12 mt-4">
+                              <label for="email">E-mail</label>
+                              <input type="text" name="email" class="form-control mt-2" value="<%= user.email%>">
+                    </div>
+
+                    <div class="col-md-12 mt-4">
+                              <label for="password">Senha</label>
+                              <input type="password" name="password" class="form-control mt-2">
+                    </div>
+
+                    <div class="col-md-12 mt-4">
+                              <button type="submit" class="btn btn-success">Atualizar</button>
+                              <a href="/admin/delete/<%= user.id %>" class="btn btn-danger">Deletar</a>
+                    </div>
+          </form>
+  </div>
+  
+</div>
+
+<%- include('./partials/_foot.ejs') %>

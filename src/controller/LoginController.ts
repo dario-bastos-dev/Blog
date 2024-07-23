@@ -39,7 +39,7 @@ export default class Login {
                                         throw new Error(err)
 
                               } else {
-                                        res.clearCookie("sessionId");
+                                        res.clearCookie("user");
                                         res.redirect("/")
                           
                               }

@@ -27,6 +27,9 @@ router.post("/articles/save", Articles.saveArticle)
 // Admin
 router.get("/admin/user/create", Users.createUserPage)
 router.get("/admin/users", Middlewars.adminAuth, Users.getAllUsers)
+router.get("/admin/profile", Users.userProfile)
+router.get("/admin/delete/:id", Users.deleteUSer)
+router.post("/admin/update/:id", Users.updateUSer)
 router.post("/user/create", Users.createNewUser)
 // Login and logout
 router.get("/admin/login", Login.loginPage)

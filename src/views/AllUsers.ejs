@@ -23,7 +23,6 @@
         <th>Id</th>
         <th>Nome</th>
         <th>E-mail</th>
-        <th>Ações</th>
       </tr>
     </thead>
 
@@ -36,60 +35,8 @@
         <th><%- i %></th>
         <th><%= user.dataValues.name %></th>
         <th><%= user.dataValues.email %></th>
-        <th>
-          <button class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#exampleModal-<%= user.dataValues.id %>" >Editar</button>
-          <a
-            href="/categories/delete/<%= user.dataValues.id %>"
-            class="btn btn-danger"
-            >Excluir</a
-          >
-        </th>
-        <!-- Modal edição -->
-        <div
-          class="modal fade"
-          id="exampleModal-<%= user.dataValues.id %>"
-          tabindex="-1"
-          aria-labelledby="exampleModalLabel"
-          aria-hidden="true"
-        >
-          <div class="modal-dialog">
-            <div class="modal-content">
-              <div class="modal-header">
-                <h1 class="modal-title fs-5" id="exampleModalLabel">
-                  
-                </h1>
-                <button
-                  type="button"
-                  class="btn-close"
-                  data-bs-dismiss="modal"
-                  aria-label="Close"
-                ></button>
-              </div>
-              <div class="modal-body">
-                    <form action="/admin/categories/edit/<%= user.dataValues.id %>" method="post">
 
-                              <label for="title">Título da categoria:</label>
-                              <input type="text" name="title" class="form-control mt-3" value="<%= user.dataValues.name %>">
-                    
-              </div>
-              <div class="modal-footer">
-                <button
-                  type="button"
-                  class="btn btn-danger"
-                  data-bs-dismiss="modal"
-                >
-                  fechar
-                </button>
-                <button type="submit" class="btn btn-success">
-                  Salvar
-                </button>
-              </div>
-          </form>
-            </div>
-          </div>
-        </div>
       </tr>
-
       <% }) %>
     </tbody>
   </table>
