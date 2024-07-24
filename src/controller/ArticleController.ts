@@ -23,7 +23,7 @@ export default abstract class Articles {
                                 category: req.body.category
                               }
 
-                              await Article.createArticle(body)
+                              await Article.createArticle(body, req.params.id)
 
                               res.redirect("/admin/articles")
 

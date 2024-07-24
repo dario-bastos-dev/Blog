@@ -46,9 +46,9 @@ export default class Category extends Model {
 
           };
 
-          static async createCategorie(body: InterfaceCategory): Promise<void> {
+          static async createCategorie(body: InterfaceCategory, id: string): Promise<void> {
             try {
-                await this.create({title: body.title, slug: slugify(body.title).toLowerCase(), userId: 1})
+                await this.create({title: body.title, slug: slugify(body.title).toLowerCase(), userId: id})
 
             } catch(e:any) {
                 throw new Error(e)

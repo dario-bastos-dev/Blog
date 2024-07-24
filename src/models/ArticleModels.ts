@@ -49,12 +49,12 @@ export default class Article extends Model {
           @BelongsTo(() => User)
           user!: User;
 
-          static async createArticle(Body: InterfaceArticle): Promise<void> {
+          static async createArticle(Body: InterfaceArticle, id: string): Promise<void> {
             try {
                 const {title, body, category} = Body
                 const slug:string = slugify(title).toLowerCase()
 
-                await this.create({title, body, slug, categoryId: category, userId: 1})
+                await this.create({title, body, slug, categoryId: category, userId: id})
 
         } catch(e:any) {
             throw new Error(e)

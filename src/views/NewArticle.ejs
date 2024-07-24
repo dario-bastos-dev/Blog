@@ -10,7 +10,7 @@
 
     <div class="card-body">
 
-      <form action="/articles/save" method="post">
+      <form action="/articles/save/<%= user.id %>" method="post">
 
         <label for="title">Título</label>
         <input

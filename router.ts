@@ -1,4 +1,3 @@
-import { request, response } from "express"
 import Articles from "./src/controller/ArticleController"
 import Categories from "./src/controller/CategoryController"
 import Login from "./src/controller/LoginController"
@@ -16,18 +15,18 @@ router.get("/admin/categories/new", Middlewars.adminAuth, Categories.categoriesN
 router.get("/admin/categories", Middlewars.adminAuth, Categories.allCategories)
 router.get("/categories/delete/:id", Categories.deleteCategorie)
 router.post("/admin/categories/edit/:id", Categories.editCategories)
-router.post("/categories/save", Categories.categorySave)
+router.post("/categories/save/:id", Categories.categorySave)
 // Article
 router.get("/articles/page/:num", Articles.articlesPage)
 router.get("/admin/articles", Middlewars.adminAuth, Articles.allArticles)
 router.get("/admin/articles/new", Middlewars.adminAuth, Articles.newArticle)
 router.get("/articles/delete/:id", Articles.deleteArticle)
 router.post("/articles/edit/:id", Articles.editArticle)
-router.post("/articles/save", Articles.saveArticle)
+router.post("/articles/save/:id", Articles.saveArticle)
 // Admin
 router.get("/admin/user/create", Users.createUserPage)
 router.get("/admin/users", Middlewars.adminAuth, Users.getAllUsers)
-router.get("/admin/profile", Users.userProfile)
+router.get("/admin/profile", Middlewars.adminAuth, Users.userProfile)
 router.get("/admin/delete/:id", Users.deleteUSer)
 router.post("/admin/update/:id", Users.updateUSer)
 router.post("/user/create", Users.createNewUser)

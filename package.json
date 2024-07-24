@@ -4,7 +4,9 @@
   "description": "Modelo padrão de projeto",
   "main": "server.ts",
   "scripts": {
-    "start": "tsx watch server.ts"
+    "dev": "tsx watch server.ts",
+    "start": "nodemon ./dist/server.js",
+    "build": "npx tsc"
   },
   "author": "Dário",
   "license": "ISC",

@@ -13,7 +13,7 @@ export default abstract class Categories {
         res.redirect("/admin/categories/new");
       } else {
         const body: InterfaceCategory = {title:req.body.title}
-        await Category.createCategorie(body);
+        await Category.createCategorie(body, req.params.id);
         res.redirect("back");
       }
     } catch (e: any) {
