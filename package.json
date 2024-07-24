@@ -3,6 +3,9 @@
   "version": "1.0.0",
   "description": "Modelo padrão de projeto",
   "main": "server.ts",
+  "engines": {
+    "node": "21.7.2"
+  },
   "scripts": {
     "dev": "tsx watch server.ts",
     "start": "nodemon ./dist/server.js",
