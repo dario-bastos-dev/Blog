@@ -8,7 +8,7 @@
   },
   "scripts": {
     "dev": "tsx watch server.ts",
-    "start": "nodemon ./dist/server.js",
+    "start": "nodemon server.js",
     "build": "npx tsc"
   },
   "author": "Dário",
