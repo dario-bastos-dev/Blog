@@ -42,7 +42,7 @@ export class Middlewars{
   };
 
   static adminAuth(req:Request, res:Response, next:NextFunction) {
-      if(req.session.user == undefined || null) res.redirect("/admin/login");
+      if(req.session.user == undefined) res.redirect("/admin/login");
       else next();
   }
 
