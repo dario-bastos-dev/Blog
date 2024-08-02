@@ -8,7 +8,7 @@
   },
   "scripts": {
     "dev": "tsx watch server.ts",
-    "start": "nodemon server.js",
+    "start": "pm2 start server.js",
     "build": "npx tsc"
   },
   "author": "Dário",
@@ -38,7 +38,7 @@
     "express-session": "^1.18.0",
     "helmet": "^7.1.0",
     "mysql2": "^3.10.1",
-    "nodemon": "^3.1.4",
+    "pm2": "^5.4.2",
     "sequelize": "^6.37.3",
     "sequelize-typescript": "^2.1.6",
     "slugify": "^1.6.6",
