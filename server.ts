@@ -17,7 +17,7 @@ connection.authenticate()
 })
 
 // Iniciando servidor
-app.listen(process.env.PORT, ()=> {
+app.listen(8080, ()=> {
           console.log("Servidor on-line!")
 })
 
