@@ -10,7 +10,6 @@ export const connection = new Sequelize({
   username: process.env.DB_USER,
   password: process.env.DB_PASSWORD,
   database: process.env.DB_NAME,
-  port: 45066,
   models: [Category, Article, User], // Informamos os modelos para o Sequelize criar as tebelas
   timezone: "-03:00"
 });
